@@ -1,6 +1,7 @@
 """ Different align directions. Used by different elements and the interpretor
 to align the element! """
 
+import typing
 from pdfedit.exceptions import InvalidElementAlignment
 
 
@@ -27,7 +28,11 @@ ALIGNMENT_TABLE = {
 }
 
 
-def to_alignment_instance(param) -> Alignment:
+def to_alignment_instance(param: typing.Union[str, Alignment]) -> Alignment:
+    """ Converts the given param into an alignment instance, if possible.
+    The given param could be a string, or an alignment instance. If there
+    is a problem converting the param into an alignment instance, an
+    `InvalidelementAlignment` exception will be raised. """
 
     if isinstance(param, Alignment):
         # If the given param is already an alignment instance,
