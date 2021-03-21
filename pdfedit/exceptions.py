@@ -1,4 +1,4 @@
-class PdfEditError:
+class PdfEditError(Exception):
     """ An error raised by the pdfedit module. """
 
 
