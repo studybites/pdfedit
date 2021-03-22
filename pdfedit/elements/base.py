@@ -1,7 +1,8 @@
 import typing
 
 from pdfedit.utils import types
-from pdfedit.utils.anchor import Anchor
+from pdfedit.utils.anchor import Anchor, AnchorTopLeft
+from pdfedit.utils.position import Position
 
 
 class Element:
@@ -14,8 +15,8 @@ class Section:
 
     def __init__(self,
                  *elements: Element,
-                 anchor: Anchor,
-                 position,
+                 position: Position,
+                 anchor: Anchor = AnchorTopLeft(),
                  ):
         self.elements = elements
         self.anchor = anchor
