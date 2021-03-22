@@ -2,6 +2,8 @@
 location. Also, contains 9 different pre-defined anchor objects, like
 `AnchorLeftTop` and `AnchorCenterMiddle`. """
 
+from pdfedit.exceptions import InvalidAnchor
+
 
 class Anchor:
 
@@ -9,6 +11,21 @@ class Anchor:
                  relative_pos_x: float,
                  relative_pos_y: float):
         self.relative_pos = (relative_pos_x, relative_pos_y)
+        self.__check_valid_relative_pos()
+
+    def __check_valid_relative_pos(self,):
+        """ Checks whatever the relative position that is saved in the current
+        instance is valid. """
+
+        for pos in self.relative_pos:
+
+            if not isinstance(pos, (float, int)):
+                raise InvalidAnchor(f"{pos} is not a valid relative position")
+
+            if pos > 1 or pos < 0:
+                raise InvalidAnchor(
+                    f"Anchor relative position must be between 0 and 1 (not {pos})"
+                )
 
 
 # pylint: disable=too-few-public-methods
