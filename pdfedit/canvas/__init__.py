@@ -1,1 +1,2 @@
-from .canvas import *
+from .canvas import Canvas
+from .section import Section
