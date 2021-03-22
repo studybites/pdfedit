@@ -19,10 +19,21 @@ class Section:
         self.anchor = anchor
         self.position = position
 
-    @property
-    def width(self,) -> types.PositiveNumber:
+    def __generate_lines(self,) -> typing.List[typing.List[Element]]:
         pass
 
     @property
+    def width(self,) -> types.PositiveNumber:
+
+        return max(
+            sum(element.width for element in line)
+            for line in self.__generate_lines()
+        )
+
+    @property
     def height(self,) -> types.PositiveNumber:
-        pass
+
+        return sum(
+            max(element.height for element in line)
+            for line in self.__generate_lines()
+        )
