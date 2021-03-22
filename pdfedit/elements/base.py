@@ -1,4 +1,5 @@
 from pdfedit.utils import types
+from pdfedit.utils.anchor import Anchor
 
 
 class Element:
@@ -11,7 +12,7 @@ class Section:
 
     def __init__(self,
                  *elements: Element,
-                 anchor,
+                 anchor: Anchor,
                  position,
                  ):
         self.elements = elements
