@@ -7,10 +7,6 @@ class InvalidPdfElement(TypeError, PdfEditError):
     but the given elements are not compatible with the new one. """
 
 
-class InvalidElementAlignment(PdfEditError):
-    """ Raised when the given alignment string doesn't match any known
-    alignment option, or if the given object is not a string at all. """
-
 class InvalidAnchor(ValueError, PdfEditError):
     """ Raised when the given anchor setting is invalid. """
 
