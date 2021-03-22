@@ -27,6 +27,9 @@ class Section:
     @property
     def width(self,) -> types.PositiveNumber:
 
+        # TODO: Can be improved and not generate the lines
+        # each time this function is called
+
         return max(
             sum(element.width for element in line)
             for line in self.__generate_lines()
@@ -34,6 +37,9 @@ class Section:
 
     @property
     def height(self,) -> types.PositiveNumber:
+
+        # TODO: Can be improved and not generate the lines
+        # each time this function is called
 
         return sum(
             max(element.height for element in line)
