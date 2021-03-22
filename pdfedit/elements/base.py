@@ -1,3 +1,5 @@
+import typing
+
 from pdfedit.utils import types
 from pdfedit.utils.anchor import Anchor
 
