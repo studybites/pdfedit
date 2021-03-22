@@ -1,9 +1,9 @@
-
 import typing
 
 from PIL import Image
 from reportlab.pdfgen.canvas import Canvas as genCanvas
 
+from pdfedit import Section
 from pdfedit.utils import types
 from pdfedit.exceptions import InvalidBackground
 
@@ -22,6 +22,8 @@ class Canvas:
         self.height = height
         self.background = background
 
+        self.sections = list()
+
     def _generate(self, file) -> None:
         """ Generates the canvas art and saves it in pdf foramt to the given
         file object. """
@@ -38,9 +40,16 @@ class Canvas:
         if self.background is not None:
             self.__add_background(canvas)
 
+        # Apply sections to the canvas
+        for section in self.sections:
+            section.generate_on_canvas(canvas)
+
         # "Update" the page and write into the given file.
         canvas.showPage()
         canvas.save()
+
+    def add_section(self, section: Section):
+        self.sections.append(section)
 
     # - - - B A C K G R O U N D - - - #
 
