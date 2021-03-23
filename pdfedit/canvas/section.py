@@ -1,5 +1,7 @@
 import typing
 
+from reportlab.pdfgen.canvas import Canvas as genCanvas
+
 from pdfedit.utils import types
 from pdfedit.utils.anchor import Anchor, AnchorTopLeft
 from pdfedit.utils.position import Position
@@ -22,6 +24,23 @@ class Section:
 
     def __generate_lines(self,) -> typing.List[typing.List[Element]]:
         pass
+
+    def onto_canvas(self, canvas: genCanvas) -> None:
+
+        start_y = self.position.y - (self.anchor.relative_y * self.height)
+        start_x = self.position.x - (self.anchor.relative_x * self.width)
+
+        cur_y = start_y
+        for line in self.__generate_lines():
+            line_height = 0
+
+            cur_x = start_x
+            for element in line:
+                element.onto_canvas(canvas, cur_x, cur_y)
+                cur_x += element.width
+
+                line_height = max((line_height, element.height))
+            cur_y += line_height
 
     @property
     def width(self,) -> types.PositiveNumber:
