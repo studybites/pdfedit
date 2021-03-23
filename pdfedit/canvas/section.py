@@ -4,6 +4,7 @@ from reportlab.pdfgen.canvas import Canvas as genCanvas
 
 from pdfedit.utils import types
 from pdfedit.utils.anchor import Anchor, AnchorTopLeft
+from pdfedit.utils.align import Alignment, AlignToLeft
 from pdfedit.utils.position import Position
 
 from pdfedit.elements.base import Element
@@ -15,14 +16,21 @@ class Section:
 
     def __init__(self,
                  *elements: Element,
+                 width: types.PositiveNumber,
                  position: Position,
                  anchor: Anchor = AnchorTopLeft(),
+                 align: Alignment = AlignToLeft(),
                  ):
         self.elements = elements
-        self.anchor = anchor
+        self.width = width
         self.position = position
+        self.anchor = anchor
+        self.align = align
 
     def __generate_lines(self,) -> typing.List[typing.List[Element]]:
+        pass
+
+    def __generate_line_width(self, line):
         pass
 
     def onto_canvas(self, canvas: genCanvas) -> None:
@@ -34,24 +42,16 @@ class Section:
         for line in self.__generate_lines():
             line_height = 0
 
-            cur_x = start_x
+            cur_x_pad = self.align.relative_x * \
+                (self.width - self.__generate_line_width(line))
+            cur_x = start_x + cur_x_pad
+
             for element in line:
                 element.onto_canvas(canvas, cur_x, cur_y)
                 cur_x += element.width
 
                 line_height = max((line_height, element.height))
             cur_y += line_height
-
-    @property
-    def width(self,) -> types.PositiveNumber:
-
-        # TODO: Can be improved and not generate the lines
-        # each time this function is called
-
-        return max(
-            sum(element.width for element in line)
-            for line in self.__generate_lines()
-        )
 
     @property
     def height(self,) -> types.PositiveNumber:
