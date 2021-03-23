@@ -4,3 +4,4 @@ import typing
 
 PositiveNumber = typing.Union[float, int]
 ColorString = str
+Percentage = float
