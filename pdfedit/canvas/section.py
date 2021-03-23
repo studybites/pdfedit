@@ -30,8 +30,12 @@ class Section:
     def __generate_lines(self,) -> typing.List[typing.List[Element]]:
         pass
 
-    def __generate_line_width(self, line):
-        pass
+    def __get_line_width(self,
+                         line: typing.List[Element]
+                         ) -> types.PositiveNumber:
+        """ Recives a line (row) of elements, and returns the sum of the widths
+        of those elements. """
+        return sum(element.width for element in line)
 
     def onto_canvas(self, canvas: genCanvas) -> None:
 
@@ -43,7 +47,7 @@ class Section:
             line_height = 0
 
             cur_x_pad = self.align.relative_x * \
-                (self.width - self.__generate_line_width(line))
+                (self.width - self.__get_line_width(line))
             cur_x = start_x + cur_x_pad
 
             for element in line:
